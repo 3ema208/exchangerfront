@@ -1,13 +1,18 @@
 import React from 'react'
-import {Auth} from './authComponent'
+import SingIn from "./singIn"
 import { connect } from 'react-redux';
-import {setEmailText, setPasswordText} from "../../store/auth/action"
+import {setEmailText, setPasswordText, tryLogin} from "../../store/auth/action"
 
 
 class AuthContainer extends React.Component{
     render(){
-        return (<Auth setEmail={this.props.setEmailText} 
-            setPassword={this.props.setPasswordText} email={this.props.email} password={this.props.password}></Auth>)
+        return (<SingIn 
+                    setEmail={this.props.setEmailText}
+                    setPassword={this.props.setPasswordText}
+                    tryLogin={this.props.tryLogin}
+                    email={this.props.email}
+                    password={this.props.password}>
+                    </SingIn>)
     }
 }
 
@@ -20,7 +25,8 @@ const mapStateProps = (store) => {
 
 const mapDispatchToProps = {
     setEmailText,
-    setPasswordText
+    setPasswordText,
+    tryLogin
 }
 
 export default connect(mapStateProps, mapDispatchToProps)(AuthContainer)

@@ -1,8 +1,9 @@
-import {AUTH_CHANGE_EMAIL, AUTH_CHANGE_PASSWORD} from './action'
+import {AUTH_CHANGE_EMAIL, AUTH_CHANGE_PASSWORD, AUTH_TRY_LOGIN} from './action'
 
 const defaultState = {
-    email: "22",
-    password: "33"
+    email: "",
+    password: "",
+    token: "",
 };
 
 export default (state=defaultState, action) => {
@@ -16,6 +17,11 @@ export default (state=defaultState, action) => {
             return {
                 ...state, 
                 password: action.payload
+            }
+        case AUTH_TRY_LOGIN:
+            return {
+                ...state,
+                token: action.payload
             }
         default:
             return state
