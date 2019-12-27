@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
+  console.log(11, props)
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -78,7 +79,7 @@ export default function SignIn(props) {
             className={classes.submit}
             onClick={(event)=>{
                 event.preventDefault()
-                props.tryLogin(props.email, props.passwrod)
+                props.login('3ema208', '1231233a')
             }}
           >
             Sign In

@@ -4,6 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import {Link} from "react-router-dom"
+
+import { connect } from 'react-redux';
 
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function ButtonAppBar(props) {
+function ButtonAppBar(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -31,10 +34,26 @@ export default function ButtonAppBar(props) {
           <Typography variant="h6" className={classes.title}>
             Ajax currency Exchanger
           </Typography>
-          <Button color="inherit" onClick={()=>{console.log("SAD!")}}>sing in</Button>
-          <Button color="inherit" onClick={()=>{console.log("SAD!")}}>Registration</Button>
+          <BtnLogin isAuth={props.isAuth}/>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+function BtnLogin({isAuth}){
+  if (!isAuth){
+    return (
+    <div>
+      <Button color="inherit"><Link to='/login'>sing in</Link></Button>
+      <Button color="inherit"><Link to='/registration'>Registration</Link></Button>
+    </div>)
+  }
+  return null
+}
+
+const mapStateProps = (state) => {
+  return {isAuth: state.auth.token !== null }
+}
+
+export default connect(mapStateProps)(ButtonAppBar)

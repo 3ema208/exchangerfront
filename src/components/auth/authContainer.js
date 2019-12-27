@@ -1,7 +1,8 @@
 import React from 'react'
 import SingIn from "./singIn"
 import { connect } from 'react-redux';
-import {setEmailText, setPasswordText, tryLogin} from "../../store/auth/action"
+
+import {setEmailText, setPasswordText, login} from "../../store/auth/action"
 
 
 class AuthContainer extends React.Component{
@@ -9,9 +10,9 @@ class AuthContainer extends React.Component{
         return (<SingIn 
                     setEmail={this.props.setEmailText}
                     setPassword={this.props.setPasswordText}
-                    tryLogin={this.props.tryLogin}
                     email={this.props.email}
-                    password={this.props.password}>
+                    password={this.props.password}
+                    login={this.props.login}>
                     </SingIn>)
     }
 }
@@ -19,14 +20,16 @@ class AuthContainer extends React.Component{
 const mapStateProps = (store) => {
     return {
         email: store.auth.email,
-        password: store.auth.password
+        password: store.auth.password,
     };
 }
 
-const mapDispatchToProps = {
-    setEmailText,
-    setPasswordText,
-    tryLogin
+const mapDispatchToProps = dispatch => {
+    return {
+        setEmailText: (e)=> dispatch(setEmailText(e)),
+        setPasswordText: (p)=> dispatch(setPasswordText(p)),
+        login: (username, password) => dispatch(login(username, password)),
+    }
 }
 
 export default connect(mapStateProps, mapDispatchToProps)(AuthContainer)

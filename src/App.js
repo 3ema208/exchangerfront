@@ -1,25 +1,41 @@
 import React from 'react';
+import axios from "axios"
 import './App.css';
 import {Container} from "@material-ui/core"
 import {Provider} from 'react-redux'
 
-import Header from "./components/Header"
-import { createStore } from 'redux';
-
+import { createStore, applyMiddleware } from 'redux';
 import rootReducers from './store/reducers'
-import Auth from './components/auth/authContainer'
 
-const Store = createStore(rootReducers)
+import Header from "./components/Header"
+import Auth from './components/auth/authContainer'
+import thunk from 'redux-thunk'
+import {Switch, BrowserRouter as Router} from 'react-router-dom' 
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true;
+
+const Store = createStore(rootReducers, applyMiddleware(thunk))
 
 function App() {
   return (
     <div className="App">
       <Provider store={Store}>
         <Container maxWidth='lg'>
-          <Header/>
+          <Router>
+            <Header/>
             <Container>
-              <Auth></Auth>
+              <Switch>
+                <Router path='/login'>
+                  <Auth></Auth>
+                </Router>
+                <Router path='/registration'>
+                  <div>reg</div>
+                </Router>
+              </Switch>
             </Container>
+          </Router>
         </Container>
       </Provider>
     </div>
