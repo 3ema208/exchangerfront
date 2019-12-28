@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,12 +15,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -36,10 +31,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
-  console.log(11, props)
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Sign in
@@ -52,10 +45,9 @@ export default function SignIn(props) {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="login"
+            label="Login"
+            autoComplete="login"
             autoFocus
           />
           <TextField
@@ -65,12 +57,12 @@ export default function SignIn(props) {
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
           />
+          {props.failLogin ? <Typography color="error" align='center'>Not correct login or password</Typography>: null}
           <Button
             type="submit"
             fullWidth
@@ -79,7 +71,7 @@ export default function SignIn(props) {
             className={classes.submit}
             onClick={(event)=>{
                 event.preventDefault()
-                props.login('3ema208', '1231233a')
+                props.login(props.email, props.password)
             }}
           >
             Sign In

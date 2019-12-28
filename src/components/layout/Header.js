@@ -4,10 +4,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import { connect } from 'react-redux';
 
+import colors from '../../stylesConst/colors'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,9 +22,10 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    color: colors.white,
+    textDecorationLine: 'inherit'
   },
 }));
-
 
 function ButtonAppBar(props) {
   const classes = useStyles();
@@ -31,29 +33,29 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} component={Link} to='/'>
             Ajax currency Exchanger
           </Typography>
-          <BtnLogin isAuth={props.isAuth}/>
+          <BtnLogin isAuth={props.isAuth} />
         </Toolbar>
       </AppBar>
-    </div>
+    </div >
   );
 }
 
-function BtnLogin({isAuth}){
-  if (!isAuth){
+function BtnLogin({ isAuth }) {
+  if (!isAuth) {
     return (
-    <div>
-      <Button color="inherit"><Link to='/login'>sing in</Link></Button>
-      <Button color="inherit"><Link to='/registration'>Registration</Link></Button>
-    </div>)
+      <div>
+        <Button color="inherit" component={Link} to='/login'>sing in</Button>
+        <Button color="inherit" component={Link} to='/registration'>Registration</Button>
+      </div>)
   }
   return null
 }
 
 const mapStateProps = (state) => {
-  return {isAuth: state.auth.token !== null }
+  return { isAuth: state.auth.token !== null }
 }
 
 export default connect(mapStateProps)(ButtonAppBar)

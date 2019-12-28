@@ -7,10 +7,10 @@ import {Provider} from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
 import rootReducers from './store/reducers'
 
-import Header from "./components/Header"
-import Auth from './components/auth/authContainer'
+import Header from "./components/layout/Header"
+import Body from "./components/layout/Body"
 import thunk from 'redux-thunk'
-import {Switch, BrowserRouter as Router} from 'react-router-dom' 
+import {BrowserRouter as Router} from 'react-router-dom' 
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -25,16 +25,7 @@ function App() {
         <Container maxWidth='lg'>
           <Router>
             <Header/>
-            <Container>
-              <Switch>
-                <Router path='/login'>
-                  <Auth></Auth>
-                </Router>
-                <Router path='/registration'>
-                  <div>reg</div>
-                </Router>
-              </Switch>
-            </Container>
+            <Body/>
           </Router>
         </Container>
       </Provider>

@@ -8,7 +8,6 @@ export const AUTH_FAIL_LOGIN = "AUTH_FAIL_LOGIN"
 
 
 export const setEmailText = (email) => {
-    console.log(33, email)
     return ({
         type: AUTH_CHANGE_EMAIL,
         payload: email
@@ -49,7 +48,9 @@ export const login = (username, password) => {
             dispatch(successLogin(token))
         })
         .catch(err => {
-            console.log('err', err)
+            if (err.response.status === 400){
+                dispatch(failLogin())
+            }
         })
     }
 }
