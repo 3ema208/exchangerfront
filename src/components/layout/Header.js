@@ -33,9 +33,7 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title} component={Link} to='/'>
-            Ajax currency Exchanger
-          </Typography>
+          <Typography variant="h6" className={classes.title} component={Link} to='/'>CurrencyExchanger</Typography>
           <BtnLogin isAuth={props.isAuth} />
         </Toolbar>
       </AppBar>
