@@ -21,11 +21,11 @@ export const setPasswordText = (password) => {
     })
 }
 
-export const successLogin = (token) => {
-    console.log("token", token)
+
+export const successLogin = (user_id, token) => {
     return ({
         type: AUTH_SUCCESS_LOGIN,
-        payload: token
+        payload: [user_id, token],
     })
 
 }
@@ -44,8 +44,9 @@ export const login = (username, password) => {
             "password": password
         })
         .then(res => {
+            let user_id = res.data.user
             const token = res.data.key;
-            dispatch(successLogin(token))
+            dispatch(successLogin(user_id, token))
         })
         .catch(err => {
             if (err.response.status === 400){

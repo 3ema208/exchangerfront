@@ -12,10 +12,8 @@ import Body from "./components/layout/Body"
 import thunk from 'redux-thunk'
 import {BrowserRouter as Router} from 'react-router-dom' 
 
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.withCredentials = true;
-
+// axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+// axios.defaults.xsrfCookieName = "csrftoken";
 const Store = createStore(rootReducers, applyMiddleware(thunk))
 
 function App() {

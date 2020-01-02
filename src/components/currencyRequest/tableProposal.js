@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, makeStyles, TablePagination, Button, Grid, ButtonGroup } from "@material-ui/core";
 import colors from "../../stylesConst/colors"
 
@@ -22,7 +22,7 @@ const actionCurrency = [
 const currency = [
     { name: "ALL", isActive: true, value: "All" },
     { name: "USD", isActive: false, value: "USD" },
-    { name: "EURO", isActive: false, value: "EURO" },
+    { name: "EUR", isActive: false, value: "EUR" },
 ]
 
 export default function ProposalTable(props) {
@@ -60,38 +60,48 @@ export default function ProposalTable(props) {
     const [page, setPage] = React.useState(0)
     const [rowsPerPage, setRowPerPage] = React.useState(16)
 
+    function filterProposalActive() {
+        let filtedProposal = proposal
+        for (let c of currency) {
+            if (c.isActive) {
+                if (c.value === 'All') { } else {
+                    filtedProposal = filtedProposal.filter((p) => p.amount_currency === c.value)
+                }
+            }
+        }
+        for (let a of actionCurrency) {
+            if (a.isActive) {
+                if (a.value === 'All') { } else {
+                    filtedProposal = filtedProposal.filter((p) => p.isSell === a.value)
+                }
+            }
+        }
+        setCurrentProposal(filtedProposal)
+    }
+
     function changeCurrency(val) {
-        currency.map((c) => {
+        for (let c of currency) {
             if (c.value === val) {
                 c.isActive = true
             } else {
                 c.isActive = false
             }
-        })
-        if (val === currency[0].value) {
-            setCurrentProposal(proposal)
-            setPage(0)
-        } else {
-            setCurrentProposal(curProposal.filter((p) => p.amount_currency === val))
         }
+        filterProposalActive()
     }
 
     function changeSellBuy(val) {
-        actionCurrency.map((a) => {
+        for (let a of actionCurrency) {
             if (a.value === val) {
                 a.isActive = true
             } else {
                 a.isActive = false
             }
-        })
-        if (val === actionCurrency[0].value) {
-            setCurrentProposal(proposal)
-            setPage(0)
-        } else {
-            setCurrentProposal(curProposal.filter((p) => {return p.isSell === val}))
-            setPage(0)
         }
+        filterProposalActive()
     }
+
+
 
     function BtnsSelectedFiltered(props) {
         return (

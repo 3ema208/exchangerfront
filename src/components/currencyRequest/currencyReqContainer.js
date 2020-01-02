@@ -38,6 +38,7 @@ class CurrencyReqContainer extends React.Component {
 }
 
 const mapStateProps = store => {
+    console.log(store)
     return {
         proposal: store.proposal.allProposal,
         currentProposal: store.proposal.currentProposal,
