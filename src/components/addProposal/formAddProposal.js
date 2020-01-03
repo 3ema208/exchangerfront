@@ -41,35 +41,40 @@ export default function FormAddProposal(props) {
         props.setSellBuy(event.target.value === 'true')
     }
 
-    const [errorRateExchange, setErrorRateEchange] = React.useState(false)
+    const [errorRateExchange, setErrorRateEchange] = React.useState(true)
     const rateExchangeRegxp = /^\d+\.\d{2}$/;
     const changeExchangRate = (event) => {
         let val = event.target.value
         let match = rateExchangeRegxp.test(val)
         setErrorRateEchange(!match)
-        if (match){
+        if (match) {
             props.setExchangeRate(parseFloat(val))
         } else {
             props.setExchangeRate(undefined)
         }
     }
 
-    const [errorAmount, setErrorAmount] = React.useState(false)
+    const [errorAmount, setErrorAmount] = React.useState(true)
     const amountRegExp = /^\d+/;
     const changeAmount = (event) => {
         let val = event.target.value
         let match = amountRegExp.test(val)
         setErrorAmount(!match)
-        if (match){
+        if (match) {
             props.setAmount(parseFloat(val))
         } else {
             props.setAmount(undefined)
         }
     }
+    const [comment, setStateComment] = React.useState('')
 
     const submitHandleAddProposal = (event) => {
         event.preventDefault()
-        props.submitActionHand("EUR", true, 25.25, 100, 'comment', 1)
+        if (errorRateExchange || errorAmount) {
+            return
+        } else {
+            props.submitActionHand(props.currency, props.sellBuy, props.exchangeRate, props.amount, comment, props.user_id)
+        }
     }
 
     return (
@@ -78,7 +83,7 @@ export default function FormAddProposal(props) {
                 <Typography component="h1" variant="h5">
                     Add Proposal
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={(event) => {submitHandleAddProposal(event)}} >
+                <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs>
                             <div className={classes.papaperItem}>
@@ -106,7 +111,7 @@ export default function FormAddProposal(props) {
                         <Grid item xs>
                             <TextField
                                 onChange={changeExchangRate}
-                                helperText={errorRateExchange ? "For example 25.25": null}
+                                helperText={errorRateExchange ? "For example 25.25" : null}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -123,7 +128,7 @@ export default function FormAddProposal(props) {
                         <Grid item xs>
                             <TextField
                                 onChange={changeAmount}
-                                helperText={errorAmount ? "Only decimal": null}
+                                helperText={errorAmount ? "Only decimal" : null}
                                 variant="outlined"
                                 margin="normal"
                                 error={errorAmount}
@@ -137,24 +142,41 @@ export default function FormAddProposal(props) {
                     </Grid>
                     <Grid>
                         <Grid item xs>
+                            <TextField
+                                multiline
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                rows={5}
+                                rowsMax={4}
+                                size="medium"
+                                id="comment_id"
+                                label="Comment"
+                                value={comment}
+                                onChange={(event) => { setStateComment(event.target.value) }}
+                                autoFocus>
 
+                            </TextField>
                         </Grid>
                     </Grid>
                     <Grid>
                         <Grid item xs>
                             <ButtonGroup fullWidth>
                                 <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.submit}>SEND
-                                    </Button>
-                                <Button
                                     variant="contained"
                                     color="primary"
                                     className={classes.submit}
-                                >CANCEL
-                                    </Button>
+                                    >CANCEL
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    onClick={(event)=>{submitHandleAddProposal(event)}}
+                                    >SEND
+                                </Button>
                             </ButtonGroup>
                         </Grid>
                     </Grid>

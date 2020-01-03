@@ -19,7 +19,9 @@ class AddProposal extends React.Component {
                     setSellBuy={this.props.setSellBuy}
                     setExchangeRate={this.props.setExchangedRate}
                     setAmount={this.props.setAmount}
-                    submitActionHand={this.props.submitAddProposal} />
+                    submitActionHand={this.props.submitAddProposal}
+                    user_id={this.props.user_id}
+                     />
             </div>
         )
     }
@@ -31,6 +33,7 @@ const mapStateProps = (store) => {
         sellBuy: store.addProposal.sellBuy,
         exchangeRate: store.addProposal.exchangeRate,
         amount: store.addProposal.amount,
+        user_id: store.auth.id
     }
 }
 

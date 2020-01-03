@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from "axios"
 import './App.css';
-import {Container} from "@material-ui/core"
-import {Provider} from 'react-redux'
+import { Container } from "@material-ui/core"
+import { Provider } from 'react-redux'
 
 import { createStore, applyMiddleware } from 'redux';
 import rootReducers from './store/reducers'
@@ -10,10 +10,23 @@ import rootReducers from './store/reducers'
 import Header from "./components/layout/Header"
 import Body from "./components/layout/Body"
 import thunk from 'redux-thunk'
-import {BrowserRouter as Router} from 'react-router-dom' 
+import { BrowserRouter as Router } from 'react-router-dom'
 
-// axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-// axios.defaults.xsrfCookieName = "csrftoken";
+
+const NOT_AUTH_STATUS_CODE = 401
+axios.interceptors.response.use(
+  (responce) => {
+    return responce
+  },
+  (error) => {
+    let {status} = error.response
+    if (status === NOT_AUTH_STATUS_CODE) {
+      window.location = '/login'
+    }
+    return Promise.reject(error)
+  }
+)
+
 const Store = createStore(rootReducers, applyMiddleware(thunk))
 
 function App() {
@@ -22,8 +35,8 @@ function App() {
       <Provider store={Store}>
         <Container maxWidth='lg'>
           <Router>
-            <Header/>
-            <Body/>
+            <Header />
+            <Body />
           </Router>
         </Container>
       </Provider>

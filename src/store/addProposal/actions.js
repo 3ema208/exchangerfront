@@ -44,7 +44,7 @@ export const addProposal = (currency, isSell, rate, amount, comment, user) => {
                 isSell: isSell,
                 exchange_rates: rate,
                 comment: comment,
-                user: 1,
+                user: user,
             }
         )
         .then(
@@ -54,6 +54,6 @@ export const addProposal = (currency, isSell, rate, amount, comment, user) => {
                     console.log(2)
                 }
             }
-        )
+        ).catch(err=>{console.log('err', err.response)})
     }
 }

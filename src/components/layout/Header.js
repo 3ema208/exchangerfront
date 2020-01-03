@@ -34,14 +34,14 @@ function ButtonAppBar(props) {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title} component={Link} to='/'>CurrencyExchanger</Typography>
-          <BtnLogin isAuth={props.isAuth} />
+          <BtnLogin isAuth={props.isAuth} username={props.username} />
         </Toolbar>
       </AppBar>
     </div >
   );
 }
 
-function BtnLogin({ isAuth }) {
+function BtnLogin({ isAuth, username }) {
   if (!isAuth) {
     return (
       <div>
@@ -49,11 +49,16 @@ function BtnLogin({ isAuth }) {
         <Button color="inherit" component={Link} to='/registration'>Registration</Button>
       </div>)
   }
-  return null
+  return (<div>
+    <Typography>{username}</Typography>
+  </div>)
 }
 
 const mapStateProps = (state) => {
-  return { isAuth: state.auth.token !== null }
+  return { 
+    isAuth: state.auth.token !== null,
+    username: state.auth.username,
+  }
 }
 
 export default connect(mapStateProps)(ButtonAppBar)
