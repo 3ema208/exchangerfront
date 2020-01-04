@@ -1,9 +1,9 @@
 import axios from 'axios'
-import {AUTH_CHANGE_EMAIL, AUTH_CHANGE_PASSWORD, AUTH_SUCCESS_LOGIN, AUTH_FAIL_LOGIN} from './action'
+import { AUTH_CHANGE_EMAIL, AUTH_CHANGE_PASSWORD, AUTH_SUCCESS_LOGIN, AUTH_FAIL_LOGIN, AUTH_LOGOUT } from './action'
 
 const defaultState = {
     id: parseInt(localStorage.getItem('user_id')),
-    username: localStorage.getItem('username'),
+    username: localStorage.getItem('username') ,
     email: '',
     password: "",
     token: localStorage.getItem("user_token"),
@@ -12,16 +12,16 @@ const defaultState = {
 
 
 
-export default (state=defaultState, action) => {
-    switch (action.type){
+export default (state = defaultState, action) => {
+    switch (action.type) {
         case AUTH_CHANGE_EMAIL:
             return {
-                ...state, 
+                ...state,
                 email: action.payload,
             }
         case AUTH_CHANGE_PASSWORD:
             return {
-                ...state, 
+                ...state,
                 password: action.payload
             }
         case AUTH_SUCCESS_LOGIN:
@@ -39,7 +39,17 @@ export default (state=defaultState, action) => {
                 token: action.payload[1],
             }
         case AUTH_FAIL_LOGIN:
-            return {...state, error: true}
+            return { ...state, error: true }
+        case AUTH_LOGOUT:
+            delete axios.defaults.headers.common['Authorization']
+            localStorage.clear()
+            return {
+                ...state, 
+                id: null,
+                username: '',
+                email: '',
+                token: null,
+            }
         default:
             return state
     }

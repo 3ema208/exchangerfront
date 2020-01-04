@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom"
-
+import { logout } from '../../store/auth/action'
 import { connect } from 'react-redux';
 
 import colors from '../../stylesConst/colors'
@@ -34,14 +34,14 @@ function ButtonAppBar(props) {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title} component={Link} to='/'>CurrencyExchanger</Typography>
-          <BtnLogin isAuth={props.isAuth} username={props.username} />
+          <BtnLogin isAuth={props.isAuth} logout={props.logout} />
         </Toolbar>
       </AppBar>
     </div >
   );
 }
 
-function BtnLogin({ isAuth, username }) {
+function BtnLogin({ isAuth, logout }) {
   if (!isAuth) {
     return (
       <div>
@@ -49,16 +49,18 @@ function BtnLogin({ isAuth, username }) {
         <Button color="inherit" component={Link} to='/registration'>Registration</Button>
       </div>)
   }
-  return (<div>
-    <Typography>{username}</Typography>
-  </div>)
+  return (<div><Button onClick={logout} color="inherit">Logout</Button></div>)
 }
 
 const mapStateProps = (state) => {
-  return { 
-    isAuth: state.auth.token !== null,
+  return {
+    isAuth: Boolean(state.auth.token),
     username: state.auth.username,
   }
 }
 
-export default connect(mapStateProps)(ButtonAppBar)
+const mapDispatch = dispatch => {
+  return {logout: () => dispatch(logout())}
+}
+
+export default connect(mapStateProps, mapDispatch)(ButtonAppBar)

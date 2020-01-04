@@ -1,16 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, makeStyles, TablePagination, Button, Grid, ButtonGroup } from "@material-ui/core";
+import {
+    Paper, TableContainer, Typography,
+    Table, TableHead, TableRow, TableCell, TableBody, makeStyles, TablePagination, Button, Grid, ButtonGroup
+} from "@material-ui/core";
 import colors from "../../stylesConst/colors"
 
 const headerTitles = [
-    { name: "#" },
     { name: "Time" },
     { name: 'Sell/Buy' },
     { name: "Exchange Rates" },
     { name: "Amount" },
     { name: "User" },
     { name: "Comment" },
+    { name: "Actions" },
 ];
 
 const actionCurrency = [
@@ -36,10 +39,16 @@ export default function ProposalTable(props) {
             marginBottom: "10px",
         },
 
-        filter: {},
+        groupButtonFilter: {
+            marginLeft: "10px",
+            border: `1px solid ${colors.lightgray3}`,
+            fontStyle: "bold",
+            backgroundColor: colors.white,
+        },
 
         buttonSelected: {
-            backgroundColor: colors.lightGray2,
+            color: colors.white,
+            backgroundColor: colors.black,
         },
 
         tableCellHead: {
@@ -50,7 +59,24 @@ export default function ProposalTable(props) {
         blockTitle: {
             textAlign: "center",
             verticalAlign: "center",
+        },
+
+        disActiveProposal: {
+            textDecoration: "line-through",
+        },
+        actionButtonsIntrestiong: {
+            backgroundColor: colors.green1,
+            "&:hover": {
+                backgroundColor: colors.green3
+            }
+        },
+        actionButtonsDisabled: {
+            backgroundColor: colors.lightGray2,
+            "&:hover": {
+                backgroundColor: colors.red2
+            }
         }
+
     })();
     const proposal = props.proposal
     const curProposal = props.currentPropsals
@@ -58,7 +84,8 @@ export default function ProposalTable(props) {
     const setCurrentProposal = props.setCurrentProposal
 
     const [page, setPage] = React.useState(0)
-    const [rowsPerPage, setRowPerPage] = React.useState(16)
+    const rowsPersState = [10, 25, 50]
+    const [rowsPerPage, setRowPerPage] = React.useState(rowsPersState[0])
 
     function filterProposalActive() {
         let filtedProposal = proposal
@@ -77,8 +104,8 @@ export default function ProposalTable(props) {
             }
         }
         setCurrentProposal(filtedProposal)
+        setPage(0)
     }
-
     function changeCurrency(val) {
         for (let c of currency) {
             if (c.value === val) {
@@ -101,8 +128,6 @@ export default function ProposalTable(props) {
         filterProposalActive()
     }
 
-
-
     function BtnsSelectedFiltered(props) {
         return (
             props.states.map((a, index) => (
@@ -117,30 +142,39 @@ export default function ProposalTable(props) {
             ))
         )
     }
-
+    function ButtonsAction({ proposal, user_id, isAuth }) {
+        if (proposal.active && proposal.user.id === user_id) {
+            return (
+                <Button className={classes.actionButtonsDisabled}>Deactivate</Button>
+            )
+        } else if (proposal.active && proposal.user.id !== user_id) {
+            return (
+                <Button disabled={!isAuth} className={classes.actionButtonsIntrestiong}>Intresting</Button>
+            )
+        } else {
+            return (<Typography> ... ... </Typography>)
+        }
+    }
     return (
         <div className={classes.root}>
-            <Grid container spacing={3} alignItems="flex-start" justify="flex-end" direction="row" className={classes.filterGrid}>
-                <Grid item>
-                    <Paper>
-                        <ButtonGroup>
-                            <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)} />
-                        </ButtonGroup>
-                    </Paper>
+            <Grid container spacing={1} direction="row" alignItems='flex-end' className={classes.filterGrid}>
+                <Grid item align="left" xs={3}>
+                    <ButtonGroup>
+                        <Button onClick={()=>{props.getProposal()}}>Refresh</Button>
+                    </ButtonGroup>
                 </Grid>
-                <Grid item align="center">
-                    <Paper>
-                        <ButtonGroup align='center'>
-                            <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
-                        </ButtonGroup>
-                    </Paper>
+                <Grid item align="right" xs={8}>
+                    <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
+                        <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)}/>
+                    </ButtonGroup>
+                    <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
+                        <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
+                    </ButtonGroup>
                 </Grid>
-                <Grid item aling="right">
-                    <Paper>
-                        <ButtonGroup>
-                            <Button component={Link} to='/addProposal'>ADD</Button>
-                        </ButtonGroup>
-                    </Paper>
+                <Grid item align="right" xs={1}>
+                    <ButtonGroup>
+                        <Button component={Link} to='/addProposal' disabled={!props.isAuth}>ADD</Button>
+                    </ButtonGroup>
                 </Grid>
             </Grid>
             <TableContainer component={Paper}>
@@ -157,22 +191,24 @@ export default function ProposalTable(props) {
                     </TableHead>
                     <TableBody>
                         {curProposal.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((p, index) => (
-                            <TableRow key={index}>
-                                <TableCell align='right'>{index + 1}</TableCell>
+                            <TableRow key={index} className={p.active ? null : classes.disActiveProposal} hover={p.active}>
                                 <TableCell align="center">{p.time}</TableCell>
                                 <TableCell align="center">{p.isSell ? "Sell" : "Buy"}</TableCell>
                                 <TableCell align="center">{p.exchange_rates}</TableCell>
                                 <TableCell align="center">{p.amount} {p.amount_currency}</TableCell>
                                 <TableCell align="center">{p.user.username}</TableCell>
                                 <TableCell align="center">{p.comment}</TableCell>
+                                <TableCell align="center">
+                                    <ButtonsAction proposal={p} user_id={props.user_id} isAuth={props.isAuth}/>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
                 <TablePagination
-                    rowsPerPageOptions={[16, 32, 64]}
+                    rowsPerPageOptions={rowsPersState}
                     component="div"
-                    count={proposal.length}
+                    count={curProposal.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={(event, nPage) => {

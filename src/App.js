@@ -14,20 +14,26 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 
 const NOT_AUTH_STATUS_CODE = 401
+
 axios.interceptors.response.use(
   (responce) => {
     return responce
   },
   (error) => {
-    let {status} = error.response
+    let { status } = error.response
     if (status === NOT_AUTH_STATUS_CODE) {
-      window.location = '/login'
+      window.location = '/'
     }
     return Promise.reject(error)
   }
 )
 
 const Store = createStore(rootReducers, applyMiddleware(thunk))
+let token = Store.getState().auth.token 
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Token ${token}`
+}
+
 
 function App() {
   return (

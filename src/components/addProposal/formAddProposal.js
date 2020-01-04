@@ -3,6 +3,7 @@ import { Container, Grid, RadioGroup, FormControlLabel, Radio, ButtonGroup, Text
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import {Link} from 'react-router-dom'
 import colors from "../../stylesConst/colors"
 
 
@@ -41,7 +42,7 @@ export default function FormAddProposal(props) {
         props.setSellBuy(event.target.value === 'true')
     }
 
-    const [errorRateExchange, setErrorRateEchange] = React.useState(true)
+    const [errorRateExchange, setErrorRateEchange] = React.useState(false)
     const rateExchangeRegxp = /^\d+\.\d{2}$/;
     const changeExchangRate = (event) => {
         let val = event.target.value
@@ -54,7 +55,7 @@ export default function FormAddProposal(props) {
         }
     }
 
-    const [errorAmount, setErrorAmount] = React.useState(true)
+    const [errorAmount, setErrorAmount] = React.useState(false)
     const amountRegExp = /^\d+/;
     const changeAmount = (event) => {
         let val = event.target.value
@@ -70,7 +71,7 @@ export default function FormAddProposal(props) {
 
     const submitHandleAddProposal = (event) => {
         event.preventDefault()
-        if (errorRateExchange || errorAmount) {
+        if (errorRateExchange || errorAmount || !props.exchangeRate || !props.amount) {
             return
         } else {
             props.submitActionHand(props.currency, props.sellBuy, props.exchangeRate, props.amount, comment, props.user_id)
@@ -167,6 +168,7 @@ export default function FormAddProposal(props) {
                                     variant="contained"
                                     color="primary"
                                     className={classes.submit}
+                                    component={Link} to='/'
                                     >CANCEL
                                 </Button>
                                 <Button

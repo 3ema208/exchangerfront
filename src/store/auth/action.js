@@ -4,7 +4,7 @@ export const AUTH_CHANGE_EMAIL = "AUTH_CHANGE_EMAIL_TEXT"
 export const AUTH_CHANGE_PASSWORD = "AUTH_CHANGE_PASSWORD_TEXT"
 export const AUTH_SUCCESS_LOGIN = "AUTH_SUCCESS_LOGIN"
 export const AUTH_FAIL_LOGIN = "AUTH_FAIL_LOGIN"
-
+export const AUTH_LOGOUT = "LOGOUT"
 
 
 export const setEmailText = (email) => {
@@ -36,6 +36,24 @@ export const failLogin = () => {
     })
 }
 
+export const successLogout = () => {
+    return ({
+        type: AUTH_LOGOUT
+    })
+}
+
+export const logout = () => {
+    return dispatch => {
+        axios.post("/auth/logout/")
+        .then(res => {
+            dispatch(successLogout())
+        })
+        .catch(err => {
+            dispatch(successLogout())
+            console.log(err.response)
+        })
+    }
+}
 
 export const login = (username, password) => {
     return dispatch => {

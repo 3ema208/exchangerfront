@@ -49,9 +49,8 @@ export const addProposal = (currency, isSell, rate, amount, comment, user) => {
         )
         .then(
             res => {
-                console.log(res)
                 if (res.status === 201){
-                    console.log(2)
+                    window.location = '/'
                 }
             }
         ).catch(err=>{console.log('err', err.response)})

@@ -2,6 +2,7 @@ import {SUCCESS_GET_PROPOSAL, FAIL_GET_PROPOSAL, CHANGE_CURRENT_PROPOSAL} from '
 
 const defaultState = {
     count: 0,
+    needRefresh: false,
     allProposal: [],
     currentProposal: [],
     errros: false,

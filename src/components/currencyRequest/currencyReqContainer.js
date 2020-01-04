@@ -27,8 +27,11 @@ class CurrencyReqContainer extends React.Component {
             <div>
                 <ProposalTable
                     proposal={this.props.proposal}
+                    getProposal={this.props.getProposal}
                     currentPropsals={this.props.currentProposal}
                     actionCurrency = {actionCurrency}
+                    isAuth={this.props.isAuth} 
+                    user_id={this.props.user_id}
                     currency={currency}
                     setCurrentProposal={this.props.changeCurProposal}
                 />
@@ -38,9 +41,10 @@ class CurrencyReqContainer extends React.Component {
 }
 
 const mapStateProps = store => {
-    console.log(store)
     return {
         proposal: store.proposal.allProposal,
+        isAuth: Boolean(store.auth.token),
+        user_id: store.auth.id,
         currentProposal: store.proposal.currentProposal,
     }
 }
