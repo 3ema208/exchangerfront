@@ -155,12 +155,23 @@ export default function ProposalTable(props) {
             return (<Typography> ... ... </Typography>)
         }
     }
+
+    function refreshHand(event){
+        props.getProposal()
+        currency.map(c=>{c.isActive = false})
+        currency[0].isActive = true
+
+        actionCurrency.map(ac=>{ac.isActive = false})
+        actionCurrency[0].isActive = true
+
+    }
+
     return (
         <div className={classes.root}>
             <Grid container spacing={1} direction="row" alignItems='flex-end' className={classes.filterGrid}>
                 <Grid item align="left" xs={3}>
                     <ButtonGroup>
-                        <Button onClick={()=>{props.getProposal()}}>Refresh</Button>
+                        <Button onClick={()=>{refreshHand()}}>Refresh</Button>
                     </ButtonGroup>
                 </Grid>
                 <Grid item align="right" xs={8}>

@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import Auth from '../../components/auth/authContainer'
 import CurrencyRequest from '../../components/currencyRequest/currencyReqContainer'
 import AddProposalForm from '../../components/addProposal/addProposalContainer'
-
+import Registration from "../../components/registration/containerRegistration"
 
 class Body extends React.Component {
     render() {
@@ -14,7 +14,7 @@ class Body extends React.Component {
                 <CssBaseline />
                 <Switch>
                     <Route exact path='/login'><Auth></Auth></Route>
-                    <Route path='/registration'><div>reg</div></Route>
+                    <Route path='/registration'><Registration/></Route>
                     <Route path='/addProposal'>
                         <AddProposalForm></AddProposalForm>
                     </Route>

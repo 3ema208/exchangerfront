@@ -42,6 +42,8 @@ export default function SignIn(props) {
             onChange={(event)=>{props.setEmail(event.target.value)}}
             value={props.email}
             variant="outlined"
+            color="secondary"
+            
             margin="normal"
             required
             fullWidth
@@ -54,6 +56,7 @@ export default function SignIn(props) {
             onChange={(event)=>{props.setPassword(event.target.value)}}
             value={props.passwrod}
             variant="outlined"
+            color="secondary"
             margin="normal"
             required
             fullWidth

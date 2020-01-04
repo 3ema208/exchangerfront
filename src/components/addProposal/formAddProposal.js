@@ -88,11 +88,11 @@ export default function FormAddProposal(props) {
                     <Grid container spacing={2}>
                         <Grid item xs>
                             <div className={classes.papaperItem}>
-                                <RadioGroup row required
+                                <RadioGroup row required 
                                     value={props.currency}
                                     onChange={(event) => { props.setCurrentCurrency(event.target.value) }}>
-                                    <FormControlLabel value='USD' control={<Radio color="default" />} label="USD" />
-                                    <FormControlLabel value='EUR' control={<Radio color="default" />} label="EUR" />
+                                    <FormControlLabel value='USD' control={<Radio color="secondary" />} label="USD" />
+                                    <FormControlLabel value='EUR' control={<Radio color="secondary" />} label="EUR" />
                                 </RadioGroup>
                             </div>
                         </Grid>
@@ -102,8 +102,8 @@ export default function FormAddProposal(props) {
                                     value={props.sellBuy}
                                     onChange={changeSellBuy}
                                 >
-                                    <FormControlLabel value={true} control={<Radio color="default" />} label="SELL" />
-                                    <FormControlLabel value={false} control={<Radio color="default" />} label="BUY" />
+                                    <FormControlLabel value={true} control={<Radio color='secondary' />} label="SELL" />
+                                    <FormControlLabel value={false} control={<Radio color='secondary' />} label="BUY" />
                                 </RadioGroup>
                             </div>
                         </Grid>
@@ -114,6 +114,7 @@ export default function FormAddProposal(props) {
                                 onChange={changeExchangRate}
                                 helperText={errorRateExchange ? "For example 25.25" : null}
                                 variant="outlined"
+                                color='secondary'
                                 margin="normal"
                                 required
                                 fullWidth
@@ -131,6 +132,7 @@ export default function FormAddProposal(props) {
                                 onChange={changeAmount}
                                 helperText={errorAmount ? "Only decimal" : null}
                                 variant="outlined"
+                                color='secondary'
                                 margin="normal"
                                 error={errorAmount}
                                 required
@@ -146,6 +148,7 @@ export default function FormAddProposal(props) {
                             <TextField
                                 multiline
                                 variant="outlined"
+                                color='secondary'
                                 margin="normal"
                                 required
                                 fullWidth
