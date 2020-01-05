@@ -158,10 +158,10 @@ export default function ProposalTable(props) {
 
     function refreshHand(event){
         props.getProposal()
-        currency.map(c=>{c.isActive = false})
+        currency.map((c) => (c.isActive = false))
         currency[0].isActive = true
 
-        actionCurrency.map(ac=>{ac.isActive = false})
+        actionCurrency.map(ac=>(ac.isActive = false))
         actionCurrency[0].isActive = true
 
     }

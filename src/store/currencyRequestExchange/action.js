@@ -3,6 +3,7 @@ import axios from 'axios'
 export const SUCCESS_GET_PROPOSAL = "SUCCESS_GET_PROPOSAL"
 export const FAIL_GET_PROPOSAL = "FAIL_GET_PROPOSAL"
 export const CHANGE_CURRENT_PROPOSAL = 'CHANGE_CURRENT_PROPOSAL'
+export const UPDATE_PROPOSAL = 'UPDATE_PROPOSAL'
 
 export const success_get_proposal = (proposal) => {
     return ({
@@ -29,6 +30,22 @@ export const getProposal = () => {
     return dispatch => {
         axios.get('/proposals/')
         .then(res => {dispatch(success_get_proposal(res.data))})
+        .catch(err => {
+            console.log(err.response)
+        })
+    }
+}
+export const deactiveProposalSuccess = (data) => {
+    return {
+        type: UPDATE_PROPOSAL,
+        payload: data
+    }
+}
+
+export const deactiveProposal = (id) => {
+    return dispatch => {
+        axios.patch(`/proposal/${id}`, { active: false })
+        .then(res => {dispatch(deactiveProposalSuccess(res.data))})
         .catch(err => {
             console.log(err.response)
         })

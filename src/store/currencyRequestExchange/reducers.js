@@ -1,4 +1,4 @@
-import {SUCCESS_GET_PROPOSAL, FAIL_GET_PROPOSAL, CHANGE_CURRENT_PROPOSAL} from './action'
+import {SUCCESS_GET_PROPOSAL, FAIL_GET_PROPOSAL, CHANGE_CURRENT_PROPOSAL, UPDATE_PROPOSAL} from './action'
 
 const defaultState = {
     count: 0,
@@ -29,6 +29,9 @@ export default (state=defaultState, action) => {
             return {
                 ...state, errors: true,
             }
+        case UPDATE_PROPOSAL:
+            // TODO update 
+            return {...state}
         default:
             return state
     }
