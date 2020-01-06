@@ -5,10 +5,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom"
-import { logout } from '../../store/auth/action'
 import { connect } from 'react-redux';
-
+import TelegramSingIn from 'react-telegram-login'
 import colors from '../../stylesConst/colors'
+import { BotName } from '../../telegramConst'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,8 +46,7 @@ function BtnLogin({ isAuth, logout }) {
   if (!isAuth) {
     return (
       <div>
-        <Button color="inherit" component={Link} to='/login'>sing in</Button>
-        <Button color="inherit" component={Link} to='/registration'>Registration</Button>
+        <TelegramSingIn dataOnauth={(data)=>{console.log(data)}} botName={BotName}/>
       </div>)
   }
   return (<div><Button onClick={logout} color="inherit">Logout</Button></div>)
@@ -54,13 +54,9 @@ function BtnLogin({ isAuth, logout }) {
 
 const mapStateProps = (state) => {
   return {
-    isAuth: Boolean(state.auth.token),
+    isAuth: Boolean(state.auth.id),
     username: state.auth.username,
   }
 }
 
-const mapDispatch = dispatch => {
-  return {logout: () => dispatch(logout())}
-}
-
-export default connect(mapStateProps, mapDispatch)(ButtonAppBar)
+export default connect(mapStateProps)(ButtonAppBar)

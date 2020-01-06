@@ -22,10 +22,10 @@ export const setPasswordText = (password) => {
 }
 
 
-export const successLogin = (user, token) => {
+export const successLogin = (response) => {
     return ({
         type: AUTH_SUCCESS_LOGIN,
-        payload: [user, token],
+        payload: response,
     })
 
 }
