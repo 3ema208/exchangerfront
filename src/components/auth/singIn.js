@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import TelegramLoginForm from 'react-telegram-login'
 import colors from "../../stylesConst/colors"
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +29,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn(props) {
+export default function TelegramLogin(){
+  return (
+    <Container component="main" maxWidth="xs">
+      <TelegramLoginForm dataOnauth={(response)=>{console.log(response)}} botName="CurrencyC_bot"></TelegramLoginForm>
+    </Container>
+  )
+}
+
+
+function SignIn(props) {
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">

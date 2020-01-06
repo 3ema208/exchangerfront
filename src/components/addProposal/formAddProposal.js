@@ -139,7 +139,6 @@ export default function FormAddProposal(props) {
                                 fullWidth
                                 id="total_sum"
                                 label="Amount"
-                                autoFocus
                             />
                         </Grid>
                     </Grid>
@@ -159,7 +158,7 @@ export default function FormAddProposal(props) {
                                 label="Comment"
                                 value={comment}
                                 onChange={(event) => { setStateComment(event.target.value) }}
-                                autoFocus>
+                                >
 
                             </TextField>
                         </Grid>
