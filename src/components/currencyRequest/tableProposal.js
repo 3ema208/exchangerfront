@@ -19,14 +19,14 @@ const headerTitles = [
 ];
 
 const actionCurrency = [
-    { name: "ALL", isActive: true, value: 'All' },
     { name: "SELL", isActive: false, value: true },
+    { name: "ALL", isActive: true, value: 'All' },
     { name: "BUY", isActive: false, value: false },
 ]
 
 const currency = [
-    { name: "ALL", isActive: true, value: "All" },
     { name: "USD", isActive: false, value: "USD" },
+    { name: "ALL", isActive: true, value: "All" },
     { name: "EUR", isActive: false, value: "EUR" },
 ]
 
@@ -42,10 +42,19 @@ export default function ProposalTable(props) {
         },
 
         groupButtonFilter: {
-            marginLeft: "10px",
-            border: `1px solid ${colors.lightgray3}`,
+            marginLeft: "2%",
+            justifyContent: "center",
             fontStyle: "bold",
-            backgroundColor: colors.white,
+        },
+        
+        refreshBtn: {
+            width: "100%",
+            backgroundColor: "#fff",
+        },
+
+        addProposalBtn: {
+            width: "100%",
+            backgroundColor: "#fff",
         },
 
         buttonSelected: {
@@ -167,38 +176,37 @@ export default function ProposalTable(props) {
     function refreshHand(event) {
         props.getProposal()
         currency.map((c) => (c.isActive = false))
-        currency[0].isActive = true
+        currency[1].isActive = true
 
         actionCurrency.map(ac => (ac.isActive = false))
-        actionCurrency[0].isActive = true
+        actionCurrency[1].isActive = true
 
     }
     return (
         <div className={classes.root}>
-            <Grid container spacing={1} direction="row" alignItems='flex-end' className={classes.filterGrid}>
-                <Grid item align="left" xs={2}>
-                    <ButtonGroup>
-                        <Button onClick={() => { refreshHand() }}>Refresh</Button>
+            <Grid container spacing={2} direction="row" alignItems='flex-end' className={classes.filterGrid} justify="space-between">
+                <Grid item xs={12} sm={3} >
+                    <ButtonGroup variant="contained" className={classes.addProposalBtn}> 
+                        <Button onClick={() => { refreshHand() }} className={classes.refreshBtn}>Refresh</Button>
                     </ButtonGroup>
                 </Grid>
-                <Grid item xs={8}>
-                    <Grid container justify='flex-end'>
-                        <Grid item xs={3} align='center'>
-                            <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
-                                <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)} />
-                            </ButtonGroup>
-                        </Grid>
-                        <Grid item xs={3} align='left'>
-                            <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
-                                <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
-                            </ButtonGroup>
-                        </Grid>
-
-                    </Grid>
+                <Grid item align='center' xs={12} sm={3}>
+                    <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
+                        <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)} />
+                    </ButtonGroup>
                 </Grid>
-                <Grid item align="right" xs={2}>
-                    <ButtonGroup>
-                        <Button component={Link} to='/addProposal' disabled={!props.isAuth}>ADD PROPOSAL</Button>
+                <Grid item align='center' xs={12} sm={3}>
+                    <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
+                        <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
+                    </ButtonGroup>
+                </Grid>
+                <Grid item xs={12} sm={3}>
+                    <ButtonGroup variant="contained" className={classes.addProposalBtn} >
+                        <Button 
+                        component={Link} 
+                        className={classes.addProposalBtn}
+                        to='/addProposal' disabled={!props.isAuth}
+                        >ADD PROPOSAL</Button>
                     </ButtonGroup>
                 </Grid>
             </Grid>
