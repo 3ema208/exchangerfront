@@ -35,7 +35,7 @@ export const setAmount = (amount) => {
     })
 }
 
-export const addProposal = (currency, isSell, rate, amount, comment, user) => {
+export const addProposal = (currency, isSell, rate, amount, comment, user_obj) => {
     return dispatch => {
         axios.post('proposals/',
             {
@@ -44,7 +44,7 @@ export const addProposal = (currency, isSell, rate, amount, comment, user) => {
                 isSell: isSell,
                 exchange_rates: rate,
                 comment: comment,
-                user: user,
+                telegram_info: user_obj,
             }
         )
         .then(

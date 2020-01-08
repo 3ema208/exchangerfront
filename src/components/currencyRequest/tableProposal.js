@@ -143,11 +143,11 @@ export default function ProposalTable(props) {
         )
     }
     function ButtonsAction({ proposal, user_id, isAuth }) {
-        if (proposal.active && proposal.user.id === user_id) {
+        if (proposal.active && proposal.telegram_info.id === user_id) {
             return (
                 <Button className={classes.actionButtonsDisabled}>Deactivate</Button>
             )
-        } else if (proposal.active && proposal.user.id !== user_id) {
+        } else if (proposal.active && proposal.telegram_info.id !== user_id) {
             return (
                 <Button disabled={!isAuth} className={classes.actionButtonsIntrestiong}>Intresting</Button>
             )
@@ -207,7 +207,7 @@ export default function ProposalTable(props) {
                                 <TableCell align="center">{p.isSell ? "Sell" : "Buy"}</TableCell>
                                 <TableCell align="center">{p.exchange_rates}</TableCell>
                                 <TableCell align="center">{p.amount} {p.amount_currency}</TableCell>
-                                <TableCell align="center">{p.user.username}</TableCell>
+                                <TableCell align="center">{p.telegram_info.username}</TableCell>
                                 <TableCell align="center">{p.comment}</TableCell>
                                 <TableCell align="center">
                                     <ButtonsAction proposal={p} user_id={props.user_id} isAuth={props.isAuth}/>

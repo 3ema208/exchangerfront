@@ -43,7 +43,7 @@ class CurrencyReqContainer extends React.Component {
 const mapStateProps = store => {
     return {
         proposal: store.proposal.allProposal,
-        isAuth: Boolean(store.auth.token),
+        isAuth: Boolean(store.auth.id),
         user_id: store.auth.id,
         currentProposal: store.proposal.currentProposal,
     }

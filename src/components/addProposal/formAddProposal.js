@@ -74,7 +74,7 @@ export default function FormAddProposal(props) {
         if (errorRateExchange || errorAmount || !props.exchangeRate || !props.amount) {
             return
         } else {
-            props.submitActionHand(props.currency, props.sellBuy, props.exchangeRate, props.amount, comment, props.user_id)
+            props.submitActionHand(props.currency, props.sellBuy, props.exchangeRate, props.amount, comment, props.user)
         }
     }
 
