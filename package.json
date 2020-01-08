@@ -2,7 +2,7 @@
   "name": "currency-exchange-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8181",
+  "proxy": "http://localhost:8181/api_v1",
   "dependencies": {
     "@material-ui/core": "^4.8.1",
     "@material-ui/icons": "^4.5.1",

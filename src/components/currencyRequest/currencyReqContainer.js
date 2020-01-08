@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ProposalTable from './tableProposal'
-import { getProposal, setCurrentProposal } from '../../store/currencyRequestExchange/action'
+import { getProposal, setCurrentProposal, deactiveProposal, interestingProposal } from '../../store/currencyRequestExchange/action'
 
 
 const actionCurrency = [
@@ -31,9 +31,11 @@ class CurrencyReqContainer extends React.Component {
                     currentPropsals={this.props.currentProposal}
                     actionCurrency = {actionCurrency}
                     isAuth={this.props.isAuth} 
-                    user_id={this.props.user_id}
+                    user={this.props.user}
                     currency={currency}
                     setCurrentProposal={this.props.changeCurProposal}
+                    deactiveProposal={this.props.deactivateProposal}
+                    interestingProposal={this.props.interestingProposal}
                 />
             </div>
         )
@@ -44,7 +46,7 @@ const mapStateProps = store => {
     return {
         proposal: store.proposal.allProposal,
         isAuth: Boolean(store.auth.id),
-        user_id: store.auth.id,
+        user: store.auth,
         currentProposal: store.proposal.currentProposal,
     }
 }
@@ -56,7 +58,13 @@ const mapActions = dispatch => {
         ),
         changeCurProposal: (proposals)=>dispatch(
             setCurrentProposal(proposals)
-        ) 
+        ),
+        deactivateProposal: (proposal) => dispatch(
+            deactiveProposal(proposal.id)
+        ),
+        interestingProposal: (proposal, user) => dispatch(
+            interestingProposal(proposal.id, user)
+        )
     }
 }
 

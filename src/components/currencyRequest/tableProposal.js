@@ -8,7 +8,7 @@ import colors from "../../stylesConst/colors"
 
 const headerTitles = [
     { name: "Time" },
-    { name: 'Sell/Buy' },
+    { name: 'Sell || Buy' },
     { name: "Exchange Rates" },
     { name: "Amount" },
     { name: "User" },
@@ -142,41 +142,44 @@ export default function ProposalTable(props) {
             ))
         )
     }
-    function ButtonsAction({ proposal, user_id, isAuth }) {
-        if (proposal.active && proposal.telegram_info.id === user_id) {
+    function ButtonsAction({ proposal, user, isAuth, deactiveProposal, interestingProposal }) {
+        if (proposal.active && proposal.telegram_info.id === user.id) {
             return (
-                <Button className={classes.actionButtonsDisabled}>Deactivate</Button>
+                <Button className={classes.actionButtonsDisabled} onClick={() => (deactiveProposal(proposal))}>Deactivate</Button>
             )
-        } else if (proposal.active && proposal.telegram_info.id !== user_id) {
+        } else if (proposal.active && proposal.telegram_info.id !== user.id) {
             return (
-                <Button disabled={!isAuth} className={classes.actionButtonsIntrestiong}>Intresting</Button>
+                <Button
+                    onClick={()=>{interestingProposal(proposal, user)}}
+                    disabled={!isAuth} 
+                    className={classes.actionButtonsIntrestiong}>Intresting</Button>
             )
         } else {
             return (<Typography> ... ... </Typography>)
         }
     }
 
-    function refreshHand(event){
+    function refreshHand(event) {
         props.getProposal()
         currency.map((c) => (c.isActive = false))
         currency[0].isActive = true
 
-        actionCurrency.map(ac=>(ac.isActive = false))
+        actionCurrency.map(ac => (ac.isActive = false))
         actionCurrency[0].isActive = true
 
     }
-
+    console.log(props)
     return (
         <div className={classes.root}>
             <Grid container spacing={1} direction="row" alignItems='flex-end' className={classes.filterGrid}>
                 <Grid item align="left" xs={3}>
                     <ButtonGroup>
-                        <Button onClick={()=>{refreshHand()}}>Refresh</Button>
+                        <Button onClick={() => { refreshHand() }}>Refresh</Button>
                     </ButtonGroup>
                 </Grid>
                 <Grid item align="right" xs={8}>
                     <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
-                        <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)}/>
+                        <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)} />
                     </ButtonGroup>
                     <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
                         <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
@@ -210,7 +213,13 @@ export default function ProposalTable(props) {
                                 <TableCell align="center">{p.telegram_info.username}</TableCell>
                                 <TableCell align="center">{p.comment}</TableCell>
                                 <TableCell align="center">
-                                    <ButtonsAction proposal={p} user_id={props.user_id} isAuth={props.isAuth}/>
+                                    <ButtonsAction
+                                        proposal={p}
+                                        user={props.user}
+                                        isAuth={props.isAuth}
+                                        deactiveProposal={props.deactiveProposal}
+                                        interestingProposal={props.interestingProposal}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}

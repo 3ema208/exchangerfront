@@ -44,10 +44,23 @@ export const deactiveProposalSuccess = (data) => {
 
 export const deactiveProposal = (id) => {
     return dispatch => {
-        axios.patch(`/proposal/${id}`, { active: false })
-        .then(res => {dispatch(deactiveProposalSuccess(res.data))})
+        axios.patch(`/proposal/${id}/`, { active: false })
+        .then(res => {
+            console.log(res)
+            if (res.status === 200) {
+                dispatch(deactiveProposalSuccess(res.data))
+                dispatch(getProposal())
+            }
+        })
         .catch(err => {
             console.log(err.response)
         })
+    }
+}
+
+export const interestingProposal = (id, user) => {
+    return dispatch => {
+        axios.post(`/proposal/${id}/interesting/`, {user: user})
+        .then(res=>{console.log(res)})
     }
 }
