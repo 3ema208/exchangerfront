@@ -15,6 +15,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 const NOT_AUTH_STATUS_CODE = 401
 
+axios.defaults.baseURL = 'api_v1/'
 axios.interceptors.response.use(
   (responce) => {
     return responce
