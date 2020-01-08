@@ -2,7 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import {
     Paper, TableContainer, Typography,
-    Table, TableHead, TableRow, TableCell, TableBody, makeStyles, TablePagination, Button, Grid, ButtonGroup
+    Table, TableHead, TableRow, TableCell,
+    TableBody, makeStyles, TablePagination,
+    Button, Grid, ButtonGroup
 } from "@material-ui/core";
 import colors from "../../stylesConst/colors"
 
@@ -49,6 +51,9 @@ export default function ProposalTable(props) {
         buttonSelected: {
             color: colors.white,
             backgroundColor: colors.black,
+            "&:hover": {
+                color: colors.black,
+            }
         },
 
         tableCellHead: {
@@ -150,8 +155,8 @@ export default function ProposalTable(props) {
         } else if (proposal.active && proposal.telegram_info.id !== user.id) {
             return (
                 <Button
-                    onClick={()=>{interestingProposal(proposal, user)}}
-                    disabled={!isAuth} 
+                    onClick={() => { interestingProposal(proposal, user) }}
+                    disabled={!isAuth}
                     className={classes.actionButtonsIntrestiong}>Intresting</Button>
             )
         } else {
@@ -168,26 +173,32 @@ export default function ProposalTable(props) {
         actionCurrency[0].isActive = true
 
     }
-    console.log(props)
     return (
         <div className={classes.root}>
             <Grid container spacing={1} direction="row" alignItems='flex-end' className={classes.filterGrid}>
-                <Grid item align="left" xs={3}>
+                <Grid item align="left" xs={2}>
                     <ButtonGroup>
                         <Button onClick={() => { refreshHand() }}>Refresh</Button>
                     </ButtonGroup>
                 </Grid>
-                <Grid item align="right" xs={8}>
-                    <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
-                        <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)} />
-                    </ButtonGroup>
-                    <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
-                        <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
-                    </ButtonGroup>
+                <Grid item xs={8}>
+                    <Grid container justify='flex-end'>
+                        <Grid item xs={3} align='center'>
+                            <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
+                                <BtnsSelectedFiltered states={actionCurrency} handleclick={(val) => changeSellBuy(val)} />
+                            </ButtonGroup>
+                        </Grid>
+                        <Grid item xs={3} align='left'>
+                            <ButtonGroup variant="contained" className={classes.groupButtonFilter}>
+                                <BtnsSelectedFiltered states={currency} handleclick={(val) => changeCurrency(val)} />
+                            </ButtonGroup>
+                        </Grid>
+
+                    </Grid>
                 </Grid>
-                <Grid item align="right" xs={1}>
+                <Grid item align="right" xs={2}>
                     <ButtonGroup>
-                        <Button component={Link} to='/addProposal' disabled={!props.isAuth}>ADD</Button>
+                        <Button component={Link} to='/addProposal' disabled={!props.isAuth}>ADD PROPOSAL</Button>
                     </ButtonGroup>
                 </Grid>
             </Grid>

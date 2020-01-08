@@ -149,7 +149,6 @@ export default function FormAddProposal(props) {
                                 variant="outlined"
                                 color='secondary'
                                 margin="normal"
-                                required
                                 fullWidth
                                 rows={5}
                                 rowsMax={4}
