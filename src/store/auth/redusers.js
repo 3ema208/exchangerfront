@@ -12,22 +12,22 @@ const defaultState = {
 };
 
 
-// function getDefaultState(){
-//     let user = localStorage.getItem('user')
-//     if (user === null) {
-//         return defaultState
-//     }
-//     let user_json = JSON.parse(user)
+function getDefaultState(){
+    let user = localStorage.getItem('user')
+    if (user === null) {
+        return defaultState
+    }
+    let user_json = JSON.parse(user)
 
-//     return user_json
-// }
+    return user_json
+}
 
 
-export default (state = defaultState, action) => {
+export default (state = getDefaultState(), action) => {
     switch (action.type) {
         case AUTH_SUCCESS_LOGIN:
             state = action.payload
-            // localStorage.setItem('user', JSON.stringify(state))
+            localStorage.setItem('user', JSON.stringify(state))
             return state
         case AUTH_LOGOUT:
             state = defaultState

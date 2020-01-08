@@ -61,6 +61,13 @@ export const deactiveProposal = (id) => {
 export const interestingProposal = (id, user) => {
     return dispatch => {
         axios.post(`/proposal/${id}/interesting/`, {user: user})
-        .then(res=>{console.log(res)})
-    }
+        .then(res=>{
+            if (res.status === 201){
+                return 
+            }
+        })
+        .catch(err=>{
+            alert(err.response)
+        })
+    }   
 }
