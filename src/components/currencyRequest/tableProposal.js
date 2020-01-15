@@ -166,7 +166,7 @@ export default function ProposalTable(props) {
                 <Button
                     onClick={() => { interestingProposal(proposal, user) }}
                     disabled={!isAuth}
-                    className={classes.actionButtonsIntrestiong}>Intresting</Button>
+                    className={classes.actionButtonsIntrestiong}>Interestingly</Button>
             )
         } else {
             return (<Typography> ... ... </Typography>)
