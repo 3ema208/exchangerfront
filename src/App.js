@@ -42,8 +42,8 @@ function App() {
       <Provider store={Store}>
         <Container maxWidth='lg'>
           <Router>
-            <Header />
-            <Body />
+            <Header/>
+            <Body/>
           </Router>
         </Container>
       </Provider>
