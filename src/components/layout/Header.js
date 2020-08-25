@@ -6,10 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core'
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux'
 import TelegramSingIn from 'react-telegram-login'
 import colors from '../../stylesConst/colors'
 import { BotName } from '../../telegramConst'
-import {successLogin} from '../../store/auth/action'
+import {tryLogin} from '../../store/auth/action'
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,16 +37,16 @@ function ButtonAppBar(props) {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title} component={Link} to='/'>CurrencyExchanger</Typography>
-          <BtnLogin isAuth={props.isAuth} username={props.username} avatar={props.avatar} successLogin={props.successLogin}/>
+          <BtnLogin isAuth={props.isAuth} username={props.username} avatar={props.avatar} tryLogin={props.tryLogin}/>
         </Toolbar>
       </AppBar>
     </div >
   );
 }
 
-function BtnLogin({ isAuth, username, avatar, successLogin }) {
+function BtnLogin({ isAuth, username, avatar, tryLogin}) {
   if (!isAuth) {
-    return <TelegramSingIn buttonSize="medium" cornerRadius={8} dataOnauth={(data) => { successLogin(data) }} botName={BotName} />
+    return <TelegramSingIn buttonSize="medium" cornerRadius={8} dataOnauth={(data) => { tryLogin(data) }} botName={BotName} />
   } else {
     return (
       <div>
@@ -62,8 +63,8 @@ const mapStateProps = (state) => {
   }
 }
 
-const mapDispatch = {
-  successLogin: successLogin
-}
+const mapDispatch = dispatch => bindActionCreators({
+  tryLogin: tryLogin
+}, dispatch)
 
 export default connect(mapStateProps, mapDispatch)(ButtonAppBar)
