@@ -229,7 +229,7 @@ export default function ProposalTable(props) {
                                 <TableCell align="center">{p.isSell ? "Sell" : "Buy"}</TableCell>
                                 <TableCell align="center">{p.exchange_rates}</TableCell>
                                 <TableCell align="center">{p.amount} {p.amount_currency}</TableCell>
-                                <TableCell align="center">{p.telegram_info.username}</TableCell>
+                                <TableCell align="center">{p.user}</TableCell>
                                 <TableCell align="center">{p.comment}</TableCell>
                                 <TableCell align="center">
                                     <ButtonsAction
