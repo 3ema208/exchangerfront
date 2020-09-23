@@ -157,11 +157,11 @@ export default function ProposalTable(props) {
         )
     }
     function ButtonsAction({ proposal, user, isAuth, deactiveProposal, interestingProposal }) {
-        if (proposal.active && proposal.telegram_info.id === user.id) {
+        if (proposal.active && proposal.user === user.id) {
             return (
                 <Button className={classes.actionButtonsDisabled} onClick={() => (deactiveProposal(proposal))}>Deactivate</Button>
             )
-        } else if (proposal.active && proposal.telegram_info.id !== user.id) {
+        } else if (proposal.active && proposal.user !== user.id) {
             return (
                 <Button
                     onClick={() => { interestingProposal(proposal, user) }}

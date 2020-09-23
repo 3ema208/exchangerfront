@@ -47,12 +47,7 @@ export const addProposal = (currency, isSell, rate, amount, comment, user_obj) =
                 telegram_info: user_obj,
             }
         )
-        .then(
-            res => {
-                if (res.status === 201){
-                    window.location = '/'
-                }
-            }
-        ).catch(err=>{console.log('err', err.response)})
+        .then(window.location='/')
+        .catch(err=>{console.log(err.response)})
     }
 }

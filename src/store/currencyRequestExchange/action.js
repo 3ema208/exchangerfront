@@ -29,7 +29,10 @@ export const setCurrentProposal = (proposals) => {
 export const getProposal = () => {
     return dispatch => {
         axios.get('/proposals/')
-        .then(res => {dispatch(success_get_proposal(res.data))})
+        .then(res => {
+            console.log(res.data)
+            dispatch(success_get_proposal(res.data))
+        })
         .catch(err => {
             console.log(err.response)
         })

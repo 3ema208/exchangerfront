@@ -13,6 +13,7 @@ export const tryLogin = (userdata) => {
 }
 
 export const successLogin = (data) => {
+    axios.defaults.headers.common['Authorization'] = `Token ${data.token}`
     return ({
         type: AUTH_SUCCESS_LOGIN,
         payload: data
